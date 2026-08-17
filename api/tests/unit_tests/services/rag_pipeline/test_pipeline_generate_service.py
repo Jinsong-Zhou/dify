@@ -1,4 +1,5 @@
 from collections.abc import Callable
+
 import pytest
 from pytest_mock import MockerFixture
 from sqlalchemy.orm import Session

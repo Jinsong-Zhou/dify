@@ -19,6 +19,7 @@ from services.account_activation_adapters import (
 )
 from services.auth.data_source_api_key_auth_service import DataSourceApiKeyAuthService
 from services.init_validation_service import InvalidInitializationPasswordError
+from tests.unit_tests.config_override import apply_config_overrides
 
 
 @pytest.mark.parametrize(
@@ -76,12 +77,11 @@ def test_init_app_registers_services_for_the_current_app(
 ) -> None:
     app = Flask(__name__)
     monkeypatch.setattr(ext_application_services, "get_session_maker", lambda: sqlite_session_factory)
-    monkeypatch.setattr(
-        ext_application_services.dify_config,
-        "DEPLOYMENT_EDITION",
-        DeploymentEdition.COMMUNITY,
+    apply_config_overrides(
+        monkeypatch,
+        DEPLOYMENT_EDITION=DeploymentEdition.COMMUNITY,
+        INIT_PASSWORD="expected",
     )
-    monkeypatch.setattr(ext_application_services.dify_config, "INIT_PASSWORD", "expected")
 
     ext_application_services.init_app(app)
 

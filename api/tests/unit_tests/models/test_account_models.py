@@ -13,7 +13,6 @@ import base64
 import secrets
 from collections.abc import Callable
 from datetime import UTC, datetime
-from unittest.mock import patch
 from uuid import uuid4
 
 import pytest
